@@ -6,7 +6,7 @@
 	<string>saveActiveFile</string>
 	<key>command</key>
 	<string>#!/usr/bin/env node
-var sys = require('sys');
+var util = require('util');
 var fs = require('fs');
 var less = require('less');
 
@@ -14,7 +14,7 @@ var less_file = process.env.TM_FILEPATH;
 var css_file = less_file.replace(/\.less$/, ".css");
 
 var input = fs.readFileSync(less_file);
-less.render(input, function (e, css) {
+less.render(input+"", function (e, css) {
   if (e) { throw e; }
   fs.writeFileSync(css_file, css);
 });
