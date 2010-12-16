@@ -13,8 +13,8 @@ var less = require('less');
 var less_file = process.env.TM_FILEPATH;
 var css_file = less_file.replace(/\.less$/, ".css");
 
-var input = fs.readFileSync(less_file);
-less.render(input+"", function (e, css) {
+var input = fs.readFileSync(less_file, 'utf8');
+less.render(input, function (e, css) {
   if (e) { throw e; }
   fs.writeFileSync(css_file, css);
 });
