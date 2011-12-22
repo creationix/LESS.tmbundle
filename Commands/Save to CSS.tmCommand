@@ -14,10 +14,23 @@ var less_file = process.env.TM_FILEPATH;
 var css_file = less_file.replace(/\.less$/, ".css");
 
 var input = fs.readFileSync(less_file, 'utf8');
-less.render(input, function (e, css) {
-  if (e) { throw e; }
-  fs.writeFileSync(css_file, css);
+try {
+  less.render(input, {}, function (e, css) {
+    if (e) { throw e; }
+    fs.writeFileSync(css_file, css);
+  });
+}
+catch (err) {
+  logError(err);
+}
+
+process.on('uncaughtException', function (err) {
+  logError(err);
 });
+
+function logError (err) {
+  console.log("LESS Error:\n" + err.message + "\nLine: " + err.line);
+}
 </string>
 	<key>input</key>
 	<string>document</string>
