@@ -15,7 +15,9 @@ var css_file = less_file.replace(/\.less$/, ".css");
 
 var input = fs.readFileSync(less_file, 'utf8');
 try {
-  less.render(input, {}, function (e, css) {
+  less.render(input, {
+  	paths: [less_file.replace("/" + process.env.TM_FILENAME, "")]
+  }, function (e, css) {
     if (e) { throw e; }
     fs.writeFileSync(css_file, css);
   });
